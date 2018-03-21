@@ -1,13 +1,3 @@
-DROP TABLE IF EXISTS
-    assignments,
-    projects,
-    locations,
-    managers,
-    dependents,
-    employees,
-    departments,
-    identities;
-
 CREATE TABLE identities (
     `id`       CHAR(16)    NOT NULL,
     `sin`      CHAR(9)     NOT NULL,
@@ -30,7 +20,7 @@ CREATE TABLE departments (
 CREATE TABLE employees (
     `iid`        CHAR(16)    NOT NULL,
     `did`        CHAR(16)    NOT NULL,
-    `supervisor` CHAR(16)    NOT NULL,
+    `supervisor` CHAR(16),
     `address`    VARCHAR(64) NOT NULL,
     `phone`      VARCHAR(32) NOT NULL,
     --
