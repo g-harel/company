@@ -1,1 +1,4 @@
 _*.sql
+
+# config gile
+company/config.php
