@@ -117,7 +117,7 @@
 			</thread>	
 			<tbody>
 				<?php
-				// Query to get the name, deparement and phone number of each employee
+				// Query to get the name, manager and starting date of each department
 				$sql = "SELECT departments.name AS dname, identities.name AS iname, managers.start
 							FROM managers
 							JOIN employees ON managers.eid = employees.iid
@@ -157,7 +157,7 @@
 			</thread>	
 			<tbody>
 				<?php
-				// Query to get the name, deparement and phone number of each employee
+				// Query to get the name, locations and department of each project
 				$sql = "SELECT projects.name AS pname, locations.location, departments.name AS dname
 							FROM projects
 							JOIN locations ON projects.lid = locations.id

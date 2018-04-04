@@ -33,7 +33,7 @@
 			</thread>	
 			<tbody>
 				<?php
-				// Query to get the name, deparement and phone number of each employee
+				// Query to get the name, manager and starting date of each deapartments
 				$sql = "SELECT departments.name AS dname, identities.name AS iname, managers.start
 							FROM managers
 							JOIN employees ON managers.eid = employees.iid

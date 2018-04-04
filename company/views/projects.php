@@ -42,7 +42,7 @@
 			</thread>	
 			<tbody>
 				<?php
-				// Query to get the name, deparement and phone number of each employee
+				// Query to get the name, location and department of each projects
 				$sql = "SELECT projects.name AS pname, locations.location, departments.name AS dname
 							FROM projects
 							JOIN locations ON projects.lid = locations.id
