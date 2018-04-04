@@ -27,9 +27,20 @@
 </head>
 
 <body>
+	<header>
+		<div class="nav">
+		<ul>
+			<li class="home"><a href="index.php">Home</a></li>
+			<li class="tutorials"><a href="views/employees.php">Employees</a></li>
+			<li class="about"><a href="views/departments.php">Departments</a></li>
+			<li class="news"><a href="views/projects.php">Projects</a></li>
+		</ul>
+		</div>
+	</header>
+
 	<div class="jumbotron text-center">
-	<h1>Company</h1> 
-	<p>This is our Main Project for COMP 353</p>
+		<h1>Company</h1> 
+		<p>This is our Main Project for COMP 353</p>
 	</div>
 
 	<div class="container-fluid text-center">
@@ -171,8 +182,6 @@
 		</table>
 	</div>
 
-	<?php
-	$con->close();
-	?>
+	<?php $con->close(); ?>
 </body>
 </html>
