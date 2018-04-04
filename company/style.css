@@ -4,6 +4,10 @@
     padding: 100px 25px;
 }
 
+.main-color {
+    color: #3c4f79;
+}
+ 
 .container-fluid {
     padding: 60px 50px;
 }
