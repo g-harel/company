@@ -7,7 +7,7 @@
 .main-color {
     color: #3c4f79;
 }
- 
+
 .container-fluid {
     padding: 60px 50px;
 }
@@ -26,37 +26,38 @@ th {
     text-align: center;
     padding: 0;
     margin: 0;
-  }
-  .nav li {
+}
+
+.nav li {
     font-family: 'Oswald', sans-serif;
     font-size: 1.2em;
     line-height: 40px;
     height: 40px;
     border-bottom: 1px solid #888;
-  }
-   
-  .nav a {
+}
+
+.nav a {
     text-decoration: none;
     color: #fff;
     display: block;
     transition: .3s background-color;
-  }
-   
-  .nav a:hover {
+}
+
+.nav a:hover {
     background-color: #3c4f79;
-  }
+}
 
-  @media screen and (min-width: 600px) {
+@media screen and (min-width: 600px) {
     .nav li {
-      width: 120px;
-      border-bottom: none;
-      height: 50px;
-      line-height: 50px;
-      font-size: 1.4em;
+        width: 120px;
+        border-bottom: none;
+        height: 50px;
+        line-height: 50px;
+        font-size: 1.4em;
     }
 
     .nav li {
-      display: inline-block;
-      margin-right: -4px;
+        display: inline-block;
+        margin-right: -4px;
     }
-  }
+}

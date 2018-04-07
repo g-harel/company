@@ -11,6 +11,7 @@
 
 	$con = new mysqli($host, $user, $password, $dbname, $port, $socket)
 		or die ('Could not connect to the database server' . mysqli_connect_error());
+
 ?>
 
 <!DOCTYPE html>
@@ -18,8 +19,8 @@
 
 <head>
 	<title>Company, Main project</title>
-  	<meta charset="utf-8">
- 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -39,7 +40,7 @@
 	</header>
 
 	<div class="jumbotron text-center">
-		<h1>Company</h1> 
+		<h1>Company</h1>
 		<p>This is our Main Project for COMP 353</p>
 	</div>
 
@@ -67,7 +68,7 @@
 
 	<div class="container-fluid text-center" id="employees">
 		<h2>Employees</h2>
-		<h4>List of Employees</h4>            
+		<h4>List of Employees</h4>
 		<table class="table table-hover">
 			<thread>
 				<tr>
@@ -75,15 +76,15 @@
 					<th>Department</th>
 					<th>Phone</th>
 				</tr>
-			</thread>	
+			</thread>
 			<tbody>
 				<?php
 				// Query to get the name, deparement and phone number of each employee
-				$sql = "SELECT identities.name AS iname, departments.name AS dname, employees.phone 
+				$sql = "SELECT identities.name AS iname, departments.name AS dname, employees.phone
 							FROM employees
 							JOIN identities ON employees.iid = identities.id
 							JOIN departments ON employees.did = departments.id";
-				
+
 				$result = $con->query($sql);
 
 				if($result->num_rows > 0){
@@ -106,7 +107,7 @@
 	<div class="container-fluid text-center" id="departments">
 		<h2>Departments</h2>
 		<h4>List of Departments</h4>
-		<br>            
+		<br>
 		<table class="table table-hover">
 			<thread>
 				<tr>
@@ -114,7 +115,7 @@
 					<th>Manager</th>
 					<th>Since</th>
 				</tr>
-			</thread>	
+			</thread>
 			<tbody>
 				<?php
 				// Query to get the name, manager and starting date of each department
@@ -123,7 +124,7 @@
 							JOIN employees ON managers.eid = employees.iid
 							JOIN departments ON managers.did = departments.id
 							JOIN identities ON employees.iid = identities.id";
-				
+
 				$result = $con->query($sql);
 
 				if($result->num_rows > 0){
@@ -146,7 +147,7 @@
 	<div class="container-fluid text-center" id="projects">
 		<h2>Projects</h2>
 		<h4>List of Projects</h4>
-		<br>             
+		<br>
 		<table class="table table-hover">
 			<thread>
 				<tr>
@@ -154,7 +155,7 @@
 					<th>Location</th>
 					<th>Department</th>
 				</tr>
-			</thread>	
+			</thread>
 			<tbody>
 				<?php
 				// Query to get the name, locations and department of each project
@@ -162,7 +163,7 @@
 							FROM projects
 							JOIN locations ON projects.lid = locations.id
 							JOIN departments ON locations.did = departments.id";
-				
+
 				$result = $con->query($sql);
 
 				if($result->num_rows > 0){
