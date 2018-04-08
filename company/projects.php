@@ -12,40 +12,21 @@
 <div class="container-fluid text-center" id="projects">
     <h2>Projects</h2>
     <h4>List of Projects</h4>
-    <br>
-    <table class="table table-hover">
-        <thread>
-            <tr>
-                <th>Project</th>
-                <th>Location</th>
-                <th>Department</th>
-            </tr>
-        </thread>
-        <tbody>
-            <?php
-            // Query to get the name, location and department of each projects
-            $sql = "SELECT projects.name AS pname, locations.location, departments.name AS dname
-                        FROM projects
-                        JOIN locations ON projects.lid = locations.id
-                        JOIN departments ON locations.did = departments.id";
 
-            $result = $con->query($sql);
+    <?php
 
-            if($result->num_rows > 0){
-                while($row = $result->fetch_assoc()) {
-                    echo "<tr>";
-                        echo "<td>".$row['pname']."</td>";
-                        echo "<td>".$row['location']."</td>";
-                        echo "<td>".$row['dname']."</td>";
-                    echo "</tr>";
-                }
-            }
-            else{
-                echo "<p>No Information to Show</p>";
-            }
-            ?>
-        </tbody>
-    </table>
+    $sql = "SELECT
+                projects.name AS 'Project',
+                locations.location AS 'Location',
+                departments.name AS 'Department'
+            FROM projects
+                JOIN locations ON (projects.lid = locations.id)
+                JOIN departments ON (locations.did = departments.id)";
+    $rows = array('Project', 'Location', 'Department');
+    include('table.php');
+
+    ?>
+
 </div>
 
 <?php include('footer.php'); ?>

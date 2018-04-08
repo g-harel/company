@@ -30,118 +30,64 @@
 <div class="container-fluid text-center" id="employees">
     <h2>Employees</h2>
     <h4>List of Employees</h4>
-    <table class="table table-hover">
-        <thread>
-            <tr>
-                <th>Name</th>
-                <th>Department</th>
-                <th>Phone</th>
-            </tr>
-        </thread>
-        <tbody>
-            <?php
-            // Query to get the name, deparement and phone number of each employee
-            $sql = "SELECT identities.name AS iname, departments.name AS dname, employees.phone
-                        FROM employees
-                        JOIN identities ON employees.iid = identities.id
-                        JOIN departments ON employees.did = departments.id";
 
-            $result = $con->query($sql);
+    <?php
 
-            if($result->num_rows > 0){
-                while($row = $result->fetch_assoc()) {
-                    echo "<tr>";
-                        echo "<td>".$row['iname']."</td>";
-                        echo "<td>".$row['dname']."</td>";
-                        echo "<td>".$row['phone']."</td>";
-                    echo "</tr>";
-                }
-            }
-            else{
-                echo "<p>No Information to Show</p>";
-            }
-            ?>
-        </tbody>
-    </table>
+    $sql = "SELECT
+                identities.name AS 'Name',
+                departments.name AS 'Department',
+                employees.phone AS 'Phone'
+            FROM
+                employees
+                    JOIN identities ON (employees.iid = identities.id)
+                    JOIN departments ON (employees.did = departments.id)";
+    $rows = array('Name', 'Department', 'Phone');
+    include('table.php');
+
+    ?>
+
 </div>
 
 <div class="container-fluid text-center" id="departments">
     <h2>Departments</h2>
     <h4>List of Departments</h4>
-    <br>
-    <table class="table table-hover">
-        <thread>
-            <tr>
-                <th>Department</th>
-                <th>Manager</th>
-                <th>Since</th>
-            </tr>
-        </thread>
-        <tbody>
-            <?php
-            // Query to get the name, manager and starting date of each department
-            $sql = "SELECT departments.name AS dname, identities.name AS iname, managers.start
-                        FROM managers
-                        JOIN employees ON managers.eid = employees.iid
-                        JOIN departments ON managers.did = departments.id
-                        JOIN identities ON employees.iid = identities.id";
 
-            $result = $con->query($sql);
+    <?php
 
-            if($result->num_rows > 0){
-                while($row = $result->fetch_assoc()) {
-                    echo "<tr>";
-                        echo "<td>".$row['dname']."</td>";
-                        echo "<td>".$row['iname']."</td>";
-                        echo "<td>".$row['start']."</td>";
-                    echo "</tr>";
-                }
-            }
-            else{
-                echo "<p>No Information to Show</p>";
-            }
-            ?>
-        </tbody>
-    </table>
+    $sql = "SELECT
+                departments.name AS 'Department',
+                identities.name AS 'Manager',
+                managers.start AS 'Since'
+            FROM
+                managers
+                    JOIN employees ON (managers.eid = employees.iid)
+                    JOIN departments ON (managers.did = departments.id)
+                    JOIN identities ON (employees.iid = identities.id)";
+    $rows = array('Department', 'Manager', 'Since');
+    include('table.php');
+
+    ?>
+
 </div>
 
 <div class="container-fluid text-center" id="projects">
     <h2>Projects</h2>
     <h4>List of Projects</h4>
-    <br>
-    <table class="table table-hover">
-        <thread>
-            <tr>
-                <th>Project</th>
-                <th>Location</th>
-                <th>Department</th>
-            </tr>
-        </thread>
-        <tbody>
-            <?php
-            // Query to get the name, locations and department of each project
-            $sql = "SELECT projects.name AS pname, locations.location, departments.name AS dname
-                        FROM projects
-                        JOIN locations ON projects.lid = locations.id
-                        JOIN departments ON locations.did = departments.id";
 
-            $result = $con->query($sql);
+    <?php
 
-            if($result->num_rows > 0){
-                while($row = $result->fetch_assoc()) {
-                    echo "<tr>";
-                        echo "<td>".$row['pname']."</td>";
-                        echo "<td>".$row['location']."</td>";
-                        echo "<td>".$row['dname']."</td>";
-                    echo "</tr>";
-                }
-            }
-            else{
-                echo "<p>No Information to Show</p>";
-            }
-            ?>
-        </tbody>
-    </table>
+    $sql = "SELECT
+                projects.name AS 'Project',
+                locations.location AS 'Location',
+                departments.name AS 'Department'
+            FROM projects
+                JOIN locations ON (projects.lid = locations.id)
+                JOIN departments ON (locations.did = departments.id)";
+    $rows = array('Project', 'Location', 'Department');
+    include('table.php');
+
+    ?>
+
 </div>
 
 <?php include('footer.php'); ?>
