@@ -1,6 +1,6 @@
 <?php
 
-$config = include('../config.php');
+$config = include('config.php');
 
 $host = $config['host'];
 $port = $config['port'];
