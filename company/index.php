@@ -1,5 +1,18 @@
 <?php include('./views/header.php'); ?>
 
+<style>
+    .jumbotron {
+        background-color: #3c4f79;
+        padding: 100px 25px;
+        border-radius: 0;
+        color: #fff;
+    }
+
+    .icon-color {
+        color: #3c4f79;
+    }
+</style>
+
 <div class="jumbotron text-center">
     <h1>Company</h1>
     <p>This is our Main Project for COMP 353</p>
@@ -11,17 +24,17 @@
 <br>
 <div class="row">
     <div class="col-sm-4">
-        <span class="glyphicon glyphicon-user main-color"></span>
+        <span class="glyphicon glyphicon-user icon-color"></span>
         <h4>Employees</h4>
         <a class="btn btn-secondary" href="#employees" role="button">Records of Employees</a>
     </div>
     <div class="col-sm-4">
-        <span class="glyphicon glyphicon-th main-color"></span>
+        <span class="glyphicon glyphicon-th icon-color"></span>
         <h4>Departments</h4>
         <a class="btn btn-secondary" href="#departments" role="button">Records of Departments</a>
     </div>
     <div class="col-sm-4">
-        <span class="glyphicon glyphicon-tasks main-color"></span>
+        <span class="glyphicon glyphicon-tasks icon-color"></span>
         <h4>Projects</h4>
         <a class="btn btn-secondary" href="#projects" role="button">Records of Projects</a>
     </div>

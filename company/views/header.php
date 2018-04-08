@@ -5,21 +5,67 @@
     <title>Company, Main project</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="style.css?<?php echo rand(); ?>">
 </head>
 
 <body>
+    <style>
+        header {
+            background-color: #212529;
+            text-align: center;
+        }
 
-<header>
-    <div class="nav">
-        <ul>
-            <li class="home"><a href="index.php">Home</a></li>
-            <li class="tutorials"><a href="employees.php">Employees</a></li>
-            <li class="about"><a href="departments.php">Departments</a></li>
-            <li class="news"><a href="projects.php">Projects</a></li>
-        </ul>
-    </div>
-</header>
+        .nav {
+            display: inline-block;
+        }
+
+        .nav a {
+            transition: .3s background-color;
+            text-decoration: none;
+            display: inline-block;
+            margin-right: -5px;
+            text-align: center;
+            line-height: 50px;
+            height: 50px;
+            width: 140px;
+            color: #fff;
+        }
+
+        .nav a:hover,
+        .nav a.selected {
+            background-color: #3c4f79;
+        }
+    </style>
+
+    <header>
+        <div class="nav">
+            <a href="index.php" class="selected">Home</a>
+            <a href="employees.php">Employees</a>
+            <a href="departments.php">Departments</a>
+            <a href="projects.php">Projects</a>
+        </div>
+    </header>
+
+    <script>
+        function filename(str) {
+            var match = (/(?:[^]*\/)?(\S+\.\S+)/g).exec(str);
+            if (match != null) {
+                return match[1];
+            }
+            return Math.random();
+        }
+
+        var current = filename(window.location.pathname);
+
+        $('header .nav a').each(function() {
+            if (current === filename(this.href)) {
+                $(this).addClass('selected');
+            } else {
+                $(this).removeClass('selected');
+            }
+        });
+    </script>

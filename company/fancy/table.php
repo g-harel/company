@@ -1,3 +1,9 @@
+<style>
+    table.fancy {
+        margin: 2em 0;
+    }
+</style>
+
 <?php
 // expects mysql query ($query)
 // expects list of rows ($rows)
@@ -7,8 +13,8 @@ $con = include('connection.php');
 $result = $con->query($sql);
 
 if($result->num_rows > 0) {
-    echo '<table class="table table-hover">';
-        echo '<thead>';
+    echo '<table class="fancy table table-hover table-bordered table-striped">';
+        echo '<thead class="thead-dark">';
             echo '<tr>';
             for($i = 0; $i < count($rows); $i++) {
                 echo '<th>'.$rows[$i].'</th>';
