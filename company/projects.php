@@ -1,14 +1,5 @@
 <?php include('./views/header.php'); ?>
 
-<div class="container-fluid text-center" id="projects">
-    <h2>Create New Project</h2>
-    <form>
-        <label>Name:</label> <input type="text"></input><br>
-        <label>Locations:</label> <p>a drop down of the known locations</p>
-    </form>
-    <br>
-</div>
-
 <div class="container-fluid text-center">
     <h2>Projects</h2>
     <h4>List of Projects</h4>
@@ -38,7 +29,7 @@
 
     $sql = "SELECT
                 p.name AS 'Project',
-                SUM(a.hours * e.hourly) AS 'Total Cost'
+                CONCAT('$', FORMAT(SUM(a.hours * e.hourly), 2)) AS 'Total Cost'
             FROM
                 projects AS p,
                 assignments AS a,

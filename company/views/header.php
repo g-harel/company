@@ -4,7 +4,7 @@
 <head>
     <title>Company, Main project</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono|Lato|Patua+One">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -15,9 +15,9 @@
 <body>
     <style>
         header {
+            border-bottom: 6px solid #3c4f79;
             background-color: #212529;
             text-align: center;
-            border-bottom: 6px solid #3c4f79;
         }
 
         .nav {
@@ -52,6 +52,7 @@
         </div>
     </header>
 
+    <!-- highlights the navigation link which matches to the current page (default is "Home") -->
     <script>
         function filename(str) {
             var match = (/(?:[^]*\/)?(\S+\.\S+)/g).exec(str);

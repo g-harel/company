@@ -3,10 +3,20 @@ body > * {
     min-width: 1000px;
 }
 
+* {
+    font-family: 'Lato', sans-serif;
+}
+
 body {
+    overflow-x: hidden;
     overflow-y: scroll;
+    width: 100vw;
 }
 
 .container-fluid {
-    padding: 60px 0 20px;
+    padding: 40px 0 20px;
+}
+
+h2 {
+    padding-top: 20px;
 }
