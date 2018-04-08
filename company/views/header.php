@@ -49,6 +49,7 @@
             <a href="employees.php">Employees</a>
             <a href="departments.php">Departments</a>
             <a href="projects.php">Projects</a>
+            <a href="admin.php">Admin &#x270E;</a>
         </div>
     </header>
 
