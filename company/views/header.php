@@ -1,5 +1,3 @@
-<?php $con = include('db.php'); ?>
-
 <!DOCTYPE html>
 <html>
 

@@ -1,7 +1,8 @@
 <?php
-// expects mysqli connection ($con)
 // expects mysql query ($query)
 // expects list of rows ($rows)
+
+$con = include('connection.php');
 
 $result = $con->query($sql);
 
@@ -26,7 +27,9 @@ if($result->num_rows > 0) {
     echo '</table>';
 }
 else{
-    echo '<p>No Information to Show</p>';
+    echo '<p>No Results to Show</p>';
 }
+
+$con->close();
 
 ?>

@@ -1,4 +1,4 @@
-<?php include('header.php'); ?>
+<?php include('./views/header.php'); ?>
 
 <div class="jumbotron text-center">
     <h1>Company</h1>
@@ -42,7 +42,7 @@
                     JOIN identities ON (employees.iid = identities.id)
                     JOIN departments ON (employees.did = departments.id)";
     $rows = array('Name', 'Department', 'Phone');
-    include('table.php');
+    include('./fancy/table.php');
 
     ?>
 
@@ -64,7 +64,7 @@
                     JOIN departments ON (managers.did = departments.id)
                     JOIN identities ON (employees.iid = identities.id)";
     $rows = array('Department', 'Manager', 'Since');
-    include('table.php');
+    include('./fancy/table.php');
 
     ?>
 
@@ -84,10 +84,10 @@
                 JOIN locations ON (projects.lid = locations.id)
                 JOIN departments ON (locations.did = departments.id)";
     $rows = array('Project', 'Location', 'Department');
-    include('table.php');
+    include('./fancy/table.php');
 
     ?>
 
 </div>
 
-<?php include('footer.php'); ?>
+<?php include('./views/footer.php'); ?>

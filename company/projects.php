@@ -1,4 +1,4 @@
-<?php include('header.php'); ?>
+<?php include('./views/header.php'); ?>
 
 <div class="container-fluid text-center" id="projects">
     <h2>Create New Project</h2>
@@ -23,10 +23,10 @@
                 JOIN locations ON (projects.lid = locations.id)
                 JOIN departments ON (locations.did = departments.id)";
     $rows = array('Project', 'Location', 'Department');
-    include('table.php');
+    include('./fancy/table.php');
 
     ?>
 
 </div>
 
-<?php include('footer.php'); ?>
+<?php include('./views/footer.php'); ?>
