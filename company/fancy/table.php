@@ -1,6 +1,10 @@
 <style>
-    table.fancy {
+    .fancy-table {
         margin: 2em 0;
+    }
+
+    table.fancy {
+        display: inline;
     }
 </style>
 
@@ -12,6 +16,7 @@ $con = include('connection.php');
 
 $result = $con->query($sql);
 
+echo '<div class="fancy-table">';
 if($result->num_rows > 0) {
     echo '<table class="fancy table table-hover table-bordered table-striped">';
         echo '<thead class="thead-dark">';
@@ -35,6 +40,7 @@ if($result->num_rows > 0) {
 else{
     echo '<p>No Results to Show</p>';
 }
+echo '</div>';
 
 $con->close();
 

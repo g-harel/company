@@ -17,6 +17,7 @@
         header {
             background-color: #212529;
             text-align: center;
+            border-bottom: 6px solid #3c4f79;
         }
 
         .nav {
@@ -24,12 +25,13 @@
         }
 
         .nav a {
-            transition: .3s background-color;
+            transition: .1s background-color;
             text-decoration: none;
             display: inline-block;
             margin-right: -5px;
             text-align: center;
             line-height: 50px;
+            outline: none;
             height: 50px;
             width: 140px;
             color: #fff;
