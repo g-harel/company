@@ -76,9 +76,9 @@ CREATE TABLE projects (
 );
 
 CREATE TABLE assignments (
-    `eid`        CHAR(16)      NOT NULL,
-    `pid`        CHAR(16)      NOT NULL,
-    `hours`      DECIMAL(8, 2) NOT NULL,
+    `eid`        CHAR(16)       NOT NULL,
+    `pid`        CHAR(16)       NOT NULL,
+    `hours`      DECIMAL(16, 2) NOT NULL,
     --
     PRIMARY KEY (`eid`, `pid`),
     FOREIGN KEY (`eid`) REFERENCES employees (`iid`),

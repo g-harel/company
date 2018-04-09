@@ -3,11 +3,13 @@
 $con = include('./fancy/connection.php');
 
 // get employees values;
+$employees = array();
 $sql = "SELECT * FROM employees JOIN identities ON employees.iid = identities.id";
-$employees;
 $result = $con->query($sql);
 if($result->num_rows > 0) {
-    $employees = $result;
+    while ($row = $result->fetch_assoc()) {
+        array_push($employees, $row);
+    }
 }
 
 // get Departments values;
@@ -19,11 +21,13 @@ if($result->num_rows > 0) {
 }
 
 // get Project values;
+$projects = array();
 $sql = "SELECT * FROM projects";
-$projects;
 $result = $con->query($sql);
 if($result->num_rows > 0) {
-    $projects = $result;
+    while ($row = $result->fetch_assoc()) {
+        array_push($projects, $row);
+    }
 }
 
 // get employees that are managers Manager values;
