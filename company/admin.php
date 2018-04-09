@@ -1,18 +1,6 @@
 <?php include('./views/header.php');
 
-$con = include('./fancy/connection.php');
-
-// get employees values;
-$sql = "SELECT * FROM employees JOIN identities ON employees.iid = identities.id";
-
-$employees;
-
-$result = $con->query($sql);
-if($result->num_rows > 0) {
-    $employees = $result;
-}
-
-$con->close();
+include('./fancy/simpleQuery.php');
 ?>
 
 
@@ -24,27 +12,49 @@ $con->close();
         <div class="col-sm-4">
             <h4>Employees</h4>
             <p>Modify or Add Employees record</p>
-            <select id="modifyEmployeeSelect" onChange="modifyEmployeeId()">
-                <option value="default" selected disabled hidden>Choose Employee</option>
-                <?php
-                  while($row = $employees->fetch_assoc()){
-                      echo '<option value="'.$row["iid"].'">' . $row["name"] . '</option>';
-                  }
-                ?>                  
-            </select>
-            <button type="button" class="btn btn-info" id="modifyEmployeeButton" disabled>Modify</button>
-            <br><br>
-            <button type="button" class="btn btn-primary">Add</button>
+            <form action="employeeModifyPage.php" id="modifyEmployeeForm" method="POST">
+                <select id="modifyEmployeeSelect" name="modifyEmployeeSelect" onChange="modifyEmployeeId()" class="selectpicker">
+                    <option value="default" selected disabled hidden>Choose Employee</option>
+                    <?php
+                    while($row = $employees->fetch_assoc()){
+                        echo '<option value="'.$row["iid"].'">' . $row["name"] . '</option>';
+                    }
+                    ?>                  
+                </select>
+                <button type="submit" onClick="modifyEmployeeSubmit()" class="btn btn-info submit" id="modifyEmployeeButton" disabled data-toggle="modal" data-target="#modifyEmployeeModal">Modify</button>
+                <br><br>
+                <button type="button" class="btn btn-primary">Add</button>
+            </form>
         </div>
         <div class="col-sm-4">
             <h4>Deparments</h4>
             <p>Modify or Add Departments record</p>
-            <button type="button" class="btn btn-info">Modify</button> <button type="button" class="btn btn-primary">Add</button>
+            <select id="modifyDepartmentSelect" onChange="modifyDepartmentId()" class="selectpicker">
+                <option value="default" selected disabled hidden>Choose deparment</option>
+                <?php
+                  while($row = $departments->fetch_assoc()){
+                      echo '<option value="'.$row["id"].'">' . $row["name"] . '</option>';
+                  }
+                ?>                  
+            </select>
+            <button type="button" class="btn btn-info" id="modifyDepartmentButton" disabled>Modify</button>
+            <br><br>
+            <button type="button" class="btn btn-primary">Add</button>
         </div>
         <div class="col-sm-4">
             <h4>Projects</h4>
             <p>Modify or Add Projects record</p>
-            <button type="button" class="btn btn-info">Modify</button> <button type="button" class="btn btn-primary">Add</button>
+            <select id="modifyProjectSelect" onChange="modifyProjectId()" class="selectpicker">
+                <option value="default" selected disabled hidden>Choose Project</option>
+                <?php
+                  while($row = $projects->fetch_assoc()){
+                      echo '<option value="'.$row["id"].'">' . $row["name"] . '</option>';
+                  }
+                ?>                  
+            </select>
+            <button type="button" class="btn btn-info" id="modifyProjectButton" disabled>Modify</button>
+            <br><br>
+            <button type="button" class="btn btn-primary">Add</button>
         </div>
     </div>
     <br><br>
@@ -52,7 +62,8 @@ $con->close();
         <div class="col-sm-4">
             <h4>Assignments</h4>
             <p>Modify or Add Assignments record</p>
-            <button type="button" class="btn btn-info">Modify</button> <button type="button" class="btn btn-primary">Add</button>
+            <button type="button" class="btn btn-info">Modify</button>
+            <button type="button" class="btn btn-primary">Add</button>
         </div>
         <div class="col-sm-4">
             <h4>Locations</h4>
@@ -69,13 +80,22 @@ $con->close();
 
 <script>
     function modifyEmployeeId(){
-        document.getElementById("modifyEmployeeButton").value = document.getElementById("modifyEmployeeSelect").value;
         document.getElementById("modifyEmployeeButton").disabled = false;
     }
+
+    function modifyDepartmentId(){
+        document.getElementById("modifyDepartmentButton").disabled = false;
+    }
+
+    function modifyProjectId(){
+        document.getElementById("modifyProjectButton").disabled = false;
+    }
+
 </script>
 
 <?php 
-// include('./views/modal.php');
+include('employeeModal.php');
+
 include('./views/footer.php');
 
 ?>
