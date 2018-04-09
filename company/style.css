@@ -8,9 +8,12 @@ body > * {
 }
 
 body {
+    padding-bottom: 100px;
     overflow-x: hidden;
     overflow-y: scroll;
-    width: 100vw;
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
 }
 
 .container-fluid {
