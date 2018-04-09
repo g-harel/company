@@ -14,7 +14,6 @@
                 employees
                     JOIN identities ON (employees.iid = identities.id)
                     JOIN departments ON (employees.did = departments.id)";
-    $rows = array('Name', 'Department', 'Phone');
     include('./fancy/table.php');
 
     ?>
@@ -40,7 +39,6 @@
                 e.iid = a.eid
             GROUP BY
                 i.id;";
-    $rows = array('Employee', 'Total Hours', 'Total Wage');
     include('./fancy/table.php');
 
     ?>
@@ -65,7 +63,6 @@
                 e.iid = a.eid
             GROUP BY
                 a.eid;";
-    $rows = array('Employee', 'Project Count');
     include('./fancy/table.php');
 
     ?>
@@ -90,7 +87,6 @@
                 sub.supervisor = e.iid
             GROUP BY
                 e.iid;";
-    $rows = array('Employee', 'Subordinates');
     include('./fancy/table.php');
 
     ?>

@@ -22,11 +22,18 @@
     .fancy-table .right {
         text-align: right;
     }
+
+    .error-message {
+        font-family: 'IBM Plex Mono', monospace;
+        text-transform: uppercase;
+        font-size: 20px;
+        color: red;
+
+    }
 </style>
 
 <?php
-// expects mysql query ($query)
-// expects list of rows ($rows)
+// expects mysql query ($sql)
 
 $con = include('connection.php');
 
@@ -35,18 +42,14 @@ $result = $con->query($sql);
 // table id used to be able to target this table with js code.
 $table_id = rand();
 
+$rows = array();
+
 echo "<div class=\"fancy-table $table_id\">";
-if($result->num_rows > 0) {
+if (!!$result && is_object($result) && $result->num_rows > 0) {
     echo '<table class="table table-hover table-bordered table-striped">';
-        echo '<thead class="thead-dark">';
-            echo '<tr>';
-            for($i = 0; $i < count($rows); $i++) {
-                echo '<th>'.$rows[$i].'</th>';
-            }
-            echo '</tr>';
-        echo '</thead>';
         echo '<tbody>';
         while($row = $result->fetch_assoc()) {
+            $rows = array_keys($row);
             echo '<tr>';
             for($i = 0; $i < count($rows); $i++) {
                 echo '<td>'.$row[$rows[$i]].'</td>';
@@ -54,10 +57,18 @@ if($result->num_rows > 0) {
             echo '</tr>';
         }
         echo '</tbody>';
+        echo '<thead class="thead-dark">';
+            echo '<tr>';
+            for($i = 0; $i < count($rows); $i++) {
+                echo '<th>'.$rows[$i].'</th>';
+            }
+            echo '</tr>';
+        echo '</thead>';
     echo '</table>';
-}
-else{
-    echo '<p>No Results to Show</p>';
+} else {
+    echo '<p class="error-message">';
+        echo 'No Results to Show';
+    echo '</p>';
 }
 echo '</div>';
 

@@ -13,7 +13,6 @@
             FROM projects
                 JOIN locations ON (projects.lid = locations.id)
                 JOIN departments ON (locations.did = departments.id)";
-    $rows = array('Project', 'Location', 'Department');
     include('./fancy/table.php');
 
     ?>
@@ -39,7 +38,6 @@
                 a.eid = e.iid
             GROUP BY
                 a.pid;";
-    $rows = array('Project', 'Total Cost');
     include('./fancy/table.php');
 
     ?>
@@ -59,7 +57,6 @@
                 projects AS p
             GROUP BY
                 p.stage;";
-    $rows = array('Stage', 'Project Count');
     include('./fancy/table.php');
 
     ?>
@@ -86,7 +83,6 @@
                 e.iid = i.id
             GROUP BY
                 p.id;";
-    $rows = array('Project', 'Participants');
     include('./fancy/table.php');
 
     ?>

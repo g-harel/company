@@ -15,7 +15,6 @@
                     JOIN employees ON (managers.eid = employees.iid)
                     JOIN departments ON (managers.did = departments.id)
                     JOIN identities ON (employees.iid = identities.id)";
-    $rows = array('Department', 'Manager', 'Since');
     include('./fancy/table.php');
 
     ?>
@@ -42,7 +41,6 @@
                 a.eid = e.iid
             GROUP BY
                 d.id;";
-    $rows = array('Department', 'Total Cost');
     include('./fancy/table.php');
 
     ?>

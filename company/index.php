@@ -18,6 +18,28 @@
     .icon-color {
         color: #3c4f79;
     }
+
+    .self-service {
+        font-family: 'IBM Plex Mono', monospace;
+        margin: 40px 0 0;
+    }
+
+    .self-service textarea {
+        height: 200px;
+        width: 600px;
+        padding: 10px;
+    }
+
+    .self-service button {
+        background-color: #212529;
+        padding: 16px 32px;
+        margin-top: 10px;
+        border: 0;
+    }
+
+    .self-service button:hover {
+        background-color: #3c4f79;
+    }
 </style>
 
 <div class="jumbotron text-center">
@@ -43,7 +65,6 @@
                     FROM projects
                         JOIN locations ON (projects.lid = locations.id)
                         JOIN departments ON (locations.did = departments.id)";
-            $rows = array('Project', 'Location', 'Department');
             include('./fancy/table.php');
 
             ?>
@@ -63,7 +84,6 @@
                             JOIN employees ON (managers.eid = employees.iid)
                             JOIN departments ON (managers.did = departments.id)
                             JOIN identities ON (employees.iid = identities.id)";
-            $rows = array('Department', 'Manager', 'Since');
             include('./fancy/table.php');
 
             ?>
@@ -85,13 +105,41 @@
                         employees
                             JOIN identities ON (employees.iid = identities.id)
                             JOIN departments ON (employees.did = departments.id)";
-            $rows = array('Name', 'Department', 'Phone');
             include('./fancy/table.php');
 
             ?>
 
         </div>
     </div>
+</div>
+
+<div id="result" class="container-fluid text-center">
+    <h2>Custom Reports</h2>
+    <h4>Self-service queries</h4>
+
+    <?php
+
+    $sql = "";
+    if (isset($_POST['query'])) {
+        $sql = $_POST['query'];
+    } else {
+        $sql = "SELECT * FROM projects;";
+    }
+
+    ?>
+
+    <form class="self-service" action="index.php#result" method="post">
+        <textarea class="lang-sql" name="query"><?php echo $sql; ?></textarea>
+        <br>
+        <button type="submit" class="btn btn-primary">Query</button>
+    </form>
+
+    <?php
+
+    include("./fancy/table.php");
+
+    ?>
+
 </div>
 
 <?php include('./views/footer.php'); ?>
