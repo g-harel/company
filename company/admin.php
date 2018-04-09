@@ -1,8 +1,49 @@
-<?php include('./views/header.php');
+<?php
+include('./views/header.php');
 
 include('./fancy/simpleQuery.php');
-?>
 
+$employeeModifSuccesMsg = "";
+
+//Submit Changes
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+
+    //Modifications for the Employee
+    if(isset($_POST['modifyEmployeeSubmit'])){
+        $iid = $name = $did =  $supervisor = $address = $phone =  $hourly = "";
+
+        $iid = $_POST["iidInput"];
+        $name = $_POST["nameInput"];
+        $did =  $_POST["departmentInput"];
+        $supervisor = $_POST["supervisorInput"];
+        $address = $_POST["addressInput"];
+        $phone =  $_POST["phoneInput"];
+        $hourly = $_POST["hourlyInput"];
+
+        $con = include('./fancy/connection.php');
+
+        $sql = "UPDATE employees
+                    SET did = '$did',
+                    supervisor = '$supervisor',
+                    address = '$address',
+                    phone = '$phone',
+                    hourly = '$hourly'
+                    WHERE iid = '$iid'";
+
+        $con->query($sql);
+
+        $sql = "UPDATE identities
+                    SET name = '$name'
+                    WHERE id = '$iid'";
+
+        $con->query($sql);
+        
+        $employeeModifSuccesMsg = "Succesfull";
+
+        $con->close();
+    }
+}
+?>
 
 <div class="container-fluid text-center">
     <h2>Admin Page</h2>
@@ -11,6 +52,7 @@ include('./fancy/simpleQuery.php');
     <div class="row">
         <div class="col-sm-4">
             <h4>Employees</h4>
+            <strong class="alert-success"><?php echo $employeeModifSuccesMsg?></strong>
             <p>Modify or Add Employees record</p>
             <form action="employeeModifyPage.php" id="modifyEmployeeForm" method="POST">
                 <select id="modifyEmployeeSelect" name="modifyEmployeeSelect" onChange="modifyEmployeeId()" class="selectpicker">
@@ -94,8 +136,5 @@ include('./fancy/simpleQuery.php');
 </script>
 
 <?php 
-include('employeeModal.php');
-
 include('./views/footer.php');
-
 ?>

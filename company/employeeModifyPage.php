@@ -1,10 +1,7 @@
 <?php
-
 include('./views/header.php');
 
 $iid = $name = $did =  $supervisor = $address = $phone =  $hourly = "";
-
-
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
   if(empty($_POST["modifyEmployeeSelect"])){
@@ -37,15 +34,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 else{
   $idd = "not defined";
 }
-
 ?>
+
 <div class="mx-auto" style="width: 200px;">
-  <form action="<?php echo $_SERVER["PHP_SELF"];?>" id="modifyEmployeeFormSubmit" method="POST">
+  <form action="admin.php" name="modifyEmployeeFormSubmit" id="modifyEmployeeFormSubmit" method="POST">
 
     <div class="form-group">
       <br>
       <h3><?php echo $name?></h3>
-      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <input type="text" class="form-control" name="iidInput" value="<?php echo $iid?>" readonly></input>
     </div>
     
     <div class="form-group">
@@ -83,51 +80,8 @@ else{
         <label>Hourly:</label> <input name="hourlyInput" class="form-control" type="text" value="<?php echo $hourly?>"> <br>
     </div>
 
-    <button type="submit" class="btn btn-success submit">Submit</button> <button type="button" class="btn btn-danger">Cancel</button>
+    <button type="submit" name="modifyEmployeeSubmit" class="btn btn-success submit">Submit</button> 
+    <a type="button" class="btn btn-danger" href="admin.php">Cancel</a>
 
   </form>
 </div>
-
-
-
-
-<?php
-
-//Submit Changes
-
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-  if(empty($_POST["modifyEmployeeFormSubmit"])){
-    //error handle
-  }
-  else{
-    $name = $did =  $supervisor = $address = $phone =  $hourly = "";
-
-    $name = $_POST["nameInput"];
-    $did =  $_POST["nameInput"];
-    $supervisor = $_POST["supervisorInput"];
-    $address = $_POST["addressInput"];
-    $phone =  $_POST["phoneInput"];
-    $hourly = $_POST["hourlyInput"];
-
-    $con = include('./fancy/connection.php');
-
-    $sql = "UPDATE employees
-                  SET did = '".$did."', supervisor = '".$supervisor."', address = '".$address."', phone = '".$phone."', hourly = '".$hourly."'
-                  WHERE iid = '".$iid."'";
-
-    $result = $con->query($sql);
-    if($result->num_rows > 0) {
-      echo "<script type='text/javascript'>location.href = 'admin.php';</script>";
-    }
-    else{
-      echo ERROR;
-    }
-
-    $con->close();
-  }
-}
-else{
-  $idd = "not defined";
-}
-
-?>
