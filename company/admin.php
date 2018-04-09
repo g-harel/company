@@ -3,7 +3,8 @@ include('./views/header.php');
 
 include('./fancy/simpleQuery.php');
 
-$employeeModifSuccesMsg = "";
+$employeeModifSuccessMsg = "";
+$departmentModifSuccessMsg = "";
 
 //Submit Changes
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -38,7 +39,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         $con->query($sql);
         
-        $employeeModifSuccesMsg = "Succesfull";
+        $employeeModifSuccessMsg = "Succesfull";
 
         $con->close();
     }
@@ -74,7 +75,55 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     
         $con->query($sql);
         
-        $employeeModifSuccesMsg = "Succesfull";
+        $employeeModifSuccessMsg = "Succesfull";
+
+        $con->close();
+    }
+
+    //Modifications for the department
+    if(isset($_POST['modifyDepartmentSubmit'])){
+        $id = $name = $supervisor= "";
+
+        $id = $_POST["idInput"];
+        $name = $_POST["nameInput"];
+        $supervisor = $_POST["supervisorInput"];
+
+        $con = include('./fancy/connection.php');
+
+        $sql = "UPDATE departments
+                    SET name = '$name'
+                    WHERE id = '$id'";
+
+        $con->query($sql);
+
+        $sql = "UPDATE managers
+                    SET eid = '$supervisor'
+                    WHERE did = '$id'";
+
+        $con->query($sql);
+        
+        $departmentModifSuccessMsg = "Succesfull";
+
+        $con->close();
+    }
+
+    //Addition of a department
+    if(isset($_POST['addDepartmentSubmit'])){
+
+        $id =  $name = "";
+
+        $id = "department". mt_rand(000000, 999999);
+        $name = $_POST["nameInput"];
+
+        $con = include('./fancy/connection.php');
+
+        $sql = "INSERT INTO departments
+                    (id, name)
+                    VALUES ('$id', '$name')";
+        
+        $con->query($sql);
+        
+        $departmentModifSuccessMsg = "Succesfull";
 
         $con->close();
     }
@@ -88,7 +137,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <div class="row">
         <div class="col-sm-4">
             <h4>Employees</h4>
-            <strong class="alert-success"><?php echo $employeeModifSuccesMsg?></strong>
+            <strong class="alert-success"><?php echo $employeeModifSuccessMsg?></strong>
             <p>Modify or Add Employees record</p>
             <form action="employeeModifyPage.php" id="modifyEmployeeForm" method="POST">
                 <select id="modifyEmployeeSelect" name="modifyEmployeeSelect" onChange="modifyEmployeeId()" class="selectpicker">
@@ -99,24 +148,26 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     }
                     ?>                  
                 </select>
-                <button type="submit" class="btn btn-info submit" id="modifyEmployeeButton" disabled data-toggle="modal" data-target="#modifyEmployeeModal">Modify</button>
+                <button type="submit" class="btn btn-info submit" id="modifyEmployeeButton" disabled>Modify</button> <br>
             </form>
             <a type="button" href='employeeAddPage.php'class="btn btn-primary">Add</a>
         </div>
         <div class="col-sm-4">
             <h4>Deparments</h4>
+            <strong class="alert-success"><?php echo $departmentModifSuccessMsg?></strong>
             <p>Modify or Add Departments record</p>
-            <select id="modifyDepartmentSelect" onChange="modifyDepartmentId()" class="selectpicker">
-                <option value="default" selected disabled hidden>Choose deparment</option>
-                <?php
-                  while($row = $departments->fetch_assoc()){
-                      echo '<option value="'.$row["id"].'">' . $row["name"] . '</option>';
-                  }
-                ?>                  
-            </select>
-            <button type="button" class="btn btn-info" id="modifyDepartmentButton" disabled>Modify</button>
-            <br><br>
-            <button type="button" class="btn btn-primary">Add</button>
+            <form action="departmentModifyPage.php" id="modifyDepartmentForm" method="POST">
+                <select id="modifyDepartmentSelect" name="modifyDepartmentSelect" onChange="modifyDepartmentId()" class="selectpicker">
+                    <option value="default" selected disabled hidden>Choose deparment</option>
+                    <?php
+                    while($row = $departments->fetch_assoc()){
+                        echo '<option value="'.$row["id"].'">' . $row["name"] . '</option>';
+                    }
+                    ?>                  
+                </select>
+                <button type="submit" class="btn btn-info submit" id="modifyDepartmentButton" disabled>Modify</button> <br>
+            <form>
+            <a type="button" href='departmentAddPage.php'class="btn btn-primary">Add</a>
         </div>
         <div class="col-sm-4">
             <h4>Projects</h4>

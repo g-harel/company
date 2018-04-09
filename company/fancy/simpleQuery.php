@@ -34,6 +34,14 @@ if($result->num_rows > 0) {
     $managersEmployees = $result;
 }
 
+//get locations
+$sql = "SELECT * FROM locations";
+$locations;
+$result = $con->query($sql);
+if($result->num_rows > 0) {
+    $locations = $result;
+}
+
 $con->close();
 
 ?>
