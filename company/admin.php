@@ -42,6 +42,42 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
         $con->close();
     }
+
+    //Addition of an Employee
+    if(isset($_POST['addEmployeeSubmit'])){
+
+        $iid = $sin= $name = $did =  $supervisor = $address = $phone =  $hourly = "";
+
+        $iid = "identity". mt_rand(00000000, 99999999);
+        $sin = "sin" . mt_rand(000000, 999999);
+        $name = $_POST["nameInput"];
+        $gender = $_POST["genderInput"];
+        $birthday =  $_POST["birthdayInput"];
+        $did = $_POST["departmentInput"];
+        $supervisor = $_POST["supervisorInput"];
+        $address = $_POST["addressInput"];
+        $phone =  $_POST["phoneInput"];
+        $hourly = $_POST["hourlyInput"];
+
+        $con = include('./fancy/connection.php');
+
+        $sql = "INSERT INTO identities
+                    (id, sin, name, birthday, gender)
+                    VALUES ('$iid', '$sin', '$name', '$birthday', '$gender')";
+        
+        $con->query($sql);
+
+        $sql = "INSERT INTO employees
+                    (iid, did, supervisor, address, phone, hourly)
+                    VALUES ((SELECT id from identities where id = '$iid'), '$did', '$supervisor', '$address', '$phone', '$hourly')";
+
+    
+        $con->query($sql);
+        
+        $employeeModifSuccesMsg = "Succesfull";
+
+        $con->close();
+    }
 }
 ?>
 
@@ -63,10 +99,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     }
                     ?>                  
                 </select>
-                <button type="submit" onClick="modifyEmployeeSubmit()" class="btn btn-info submit" id="modifyEmployeeButton" disabled data-toggle="modal" data-target="#modifyEmployeeModal">Modify</button>
-                <br><br>
-                <button type="button" class="btn btn-primary">Add</button>
+                <button type="submit" class="btn btn-info submit" id="modifyEmployeeButton" disabled data-toggle="modal" data-target="#modifyEmployeeModal">Modify</button>
             </form>
+            <a type="button" href='employeeAddPage.php'class="btn btn-primary">Add</a>
         </div>
         <div class="col-sm-4">
             <h4>Deparments</h4>
