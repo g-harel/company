@@ -46,7 +46,7 @@
 </div>
 
 <div class="container-fluid text-center">
-    <h2>Employees Project Invlolvment</h2>
+    <h2>Employees Project Involvment</h2>
     <h4>From project assignments</h4>
 
     <?php

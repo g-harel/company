@@ -13,6 +13,7 @@
 
     form.assignments > *,
     form.managers > *,
+    .btn.btn-primary,
     .alert {
         margin-right: auto;
         margin-left: auto;
@@ -178,7 +179,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     //log time
-    if (isset($_POST['log-time'])) {
+    if (
+        isset($_POST['log-time']) &&
+        isset($_POST['employee-id']) &&
+        isset($_POST['project-id']) &&
+        isset($_POST['hours'])
+    ) {
         $eid = $_POST['employee-id'];
         $pid = $_POST['project-id'];
         $hours = number_format($_POST['hours'], 2);
@@ -196,7 +202,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $con->close();
     }
 
-    if (isset($_POST['promote-employee'])) {
+    // promote employee
+    if (
+        isset($_POST['promote-employee']) &&
+        isset($_POST['employee-id']) &&
+        isset($_POST['department-id'])
+    ) {
         $eid = $_POST['employee-id'];
         $did = $_POST['department-id'];
 
@@ -233,7 +244,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     ?>
 
                 </select>
-                <button type="submit" class="btn btn-info submit" id="modifyEmployeeButton" disabled>Modify</button> <br>
+                <button type="submit" class="btn btn-info submit" id="modifyEmployeeButton" disabled>Modify</button><br>
             </form>
             <a type="button" href='employeeAddPage.php'class="btn btn-primary">Add</a>
         </div>
@@ -244,16 +255,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <form action="departmentModifyPage.php" id="modifyDepartmentForm" method="POST">
                 <select id="modifyDepartmentSelect" name="modifyDepartmentSelect" onChange="modifyDepartmentId()" class="selectpicker">
                     <option value="default" selected disabled hidden>Choose deparment</option>
+
                     <?php
                     foreach ($departments as $row) {
                         echo '<option value="'.$row["id"].'">' . $row["name"] . '</option>';
                     }
                     ?>
+
                 </select>
-                <button type="submit" class="btn btn-info submit" id="modifyDepartmentButton" disabled>Modify</button> <br>
+                <button type="submit" class="btn btn-info submit" id="modifyDepartmentButton" disabled>Modify</button><br>
             </form>
-            <a type="button" href='departmentAddPage.php' class="btn btn-primary">Add</a>
+            <a type="button" href='departmentAddPage.php'class="btn btn-primary">Add</a><br>
         </div>
+
+
         <div class="col-sm-4">
             <h4>Projects</h4>
             <strong class="alert-success"><?php echo $projectModifSuccessMsg?></strong>
@@ -261,21 +276,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <form action="projectModifyPage.php" id="modifyProjectForm" method="POST">
                 <select id="modifyProjectSelect" name="modifyProjectSelect" onChange="modifyProjectId()" class="selectpicker">
                     <option value="default" selected disabled hidden>Choose Project</option>
+
                     <?php
                     foreach ($projects as $row) {
                         echo '<option value="'.$row["id"].'">' . $row["name"] . '</option>';
                     }
-                    ?>                  
+                    ?>
+
                 </select>
                 <button type="submit" class="btn btn-info submit" id="modifyProjectButton" disabled>Modify</button> <br>
             </form>
             <a type="button" href='projectAddPage.php' class="btn btn-primary">Add</a>
         </div>
     </div>
-    <br><br>
+
+
+    <br><br><br><br>
+
+
     <div class="row">
         <div class="col-sm-4">
             <h4>Assignments</h4>
+
             <?php
             if ($log_time_success) {
                 echo '<strong class="alert-success">';
@@ -283,6 +305,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo '</strong>';
             }
             ?>
+
             <p>Log employee hours</p>
             <form class="assignments" action="admin.php" method="POST">
                 <select name="employee-id" class="selectpicker">
@@ -311,7 +334,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </form>
 
             <?php
-
             if ($log_time_error) {
                 echo '<div class="alert alert-danger">';
                     echo '<b>An error has occured</b> '.$log_time_error;
@@ -321,14 +343,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo 'Time successfully logged!';
                 echo '</div>';
             }
-
             ?>
+
         </div>
+
+
         <div class="col-sm-4">
             <h4>Locations</h4>
             <p>Modify or Add Locations record</p>
-            <button type="button" class="btn btn-info">Modify</button> <button type="button" class="btn btn-primary">Add</button>
+            <form>
+                <button type="button" class="btn btn-info">Modify</button><br>
+                <button type="button" class="btn btn-primary">Add</button><br>
+            </form>
         </div>
+
+
         <div class="col-sm-4">
             <h4>Managers</h4>
             <p>Promote employees</p>
@@ -337,11 +366,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <option value="default" selected disabled hidden>Choose Employee&nbsp;&nbsp;</option>
 
                     <?php
-
                     foreach ($employees as $row) {
                         echo '<option value="'.$row["iid"].'">' . $row["name"] . '</option>';
                     }
-
                     ?>
 
                 </select>
@@ -350,11 +377,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <option value="default" selected disabled hidden>Choose Department&nbsp;&nbsp;</option>
 
                     <?php
-
                     foreach ($departments as $row) {
                         echo '<option value="'.$row["id"].'">' . $row["name"] . '</option>';
                     }
-
                     ?>
 
                 </select><br>
@@ -362,7 +387,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </form>
 
             <?php
-
             if ($promote_employee_error) {
                 echo '<div class="alert alert-danger">';
                     echo '<b>An error has occured</b> '.$promote_employee_error;
@@ -372,9 +396,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo 'Employee successfully promoted!';
                 echo '</div>';
             }
-
             ?>
+
         </div>
+
+
     </div>
 </div>
 
