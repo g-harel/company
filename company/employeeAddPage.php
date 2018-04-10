@@ -16,7 +16,7 @@ include('./fancy/simpleQuery.php');
         <label>Name:</label> <input name="nameInput" class="form-control" type="text"> <br>
         <label>Gender:</label> <br>
             Male: <input name="genderInput" type="radio" value="M"><br>
-            Femmel: <input name="genderInput" type="radio" value="F"><br>
+            Female: <input name="genderInput" type="radio" value="F"><br>
             Other: <input name="genderInput" type="radio" value="O"> <br><br>
         <label>Birthday:</label> <input name="birthdayInput" class="form-control" type="date"> <br>
         <label>Department:</label>

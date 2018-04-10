@@ -26,7 +26,7 @@ CREATE TABLE employees (
     `hourly`     DECIMAL(16,2) NOT NULL,
     --
     PRIMARY KEY (`iid`),
-    FOREIGN KEY (`iid`)        REFERENCES identities (`id`),
+    FOREIGN KEY (`iid`)        REFERENCES identities (`id`) ON DELETE CASCADE,
     FOREIGN KEY (`did`)        REFERENCES departments (`id`),
     FOREIGN KEY (`supervisor`) REFERENCES employees (`iid`)
 );
@@ -36,8 +36,8 @@ CREATE TABLE dependents (
     `eid` CHAR(16) NOT NULL,
     --
     PRIMARY KEY (`iid`),
-    FOREIGN KEY (`iid`) REFERENCES identities (`id`),
-    FOREIGN KEY (`eid`) REFERENCES employees (`iid`)
+    FOREIGN KEY (`iid`) REFERENCES identities (`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`eid`) REFERENCES employees (`iid`) ON DELETE CASCADE
 );
 
 CREATE TABLE managers (
@@ -81,6 +81,6 @@ CREATE TABLE assignments (
     `hours`      DECIMAL(16, 2) NOT NULL,
     --
     PRIMARY KEY (`eid`, `pid`),
-    FOREIGN KEY (`eid`) REFERENCES employees (`iid`),
-    FOREIGN KEY (`pid`) REFERENCES projects (`id`)
+    FOREIGN KEY (`eid`) REFERENCES employees (`iid`) ON DELETE CASCADE,
+    FOREIGN KEY (`pid`) REFERENCES projects (`id`) ON DELETE CASCADE
 );

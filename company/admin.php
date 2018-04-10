@@ -11,6 +11,10 @@
         margin: 10px;
     }
 
+    .alert.lg {
+        margin-top: 40px;
+    }
+
     form.assignments > *,
     form.managers > *,
     .btn.btn-primary,
@@ -56,6 +60,8 @@
 
 <?php
 
+$delete_item_error = false;
+
 $employeeModifSuccessMsg = "";
 $departmentModifSuccessMsg = "";
 $projectModifSuccessMsg = "";
@@ -67,6 +73,26 @@ $promote_employee_error = false;
 
 //Submit Changes
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // delete a record
+    if (
+        isset($_POST['delete']) &&
+        isset($_POST['table']) &&
+        isset($_POST['key']) &&
+        isset($_POST['value'])
+    ) {
+        $table = $_POST['table'];
+        $key = $_POST['key'];
+        $value = $_POST['value'];
+
+        $con = include('./fancy/connection.php');
+
+        $sql = "DELETE FROM $table
+                WHERE `$key`='$value'";
+
+        $con->query($sql);
+        $delete_item_error = $con->error;
+        $con->close();
+    }
 
     //Modifications for the Employee
     if (isset($_POST['modifyEmployeeSubmit'])) {
@@ -352,6 +378,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </select>
                 <button type="submit" class="btn btn-info submit" id="modifyEmployeeButton" disabled>Modify</button><br>
             </form>
+            <hr>
+            <form action="admin.php" method="POST">
+                <script>
+                    function deleteEmployeeId() {
+                        document.getElementById("deleteEmployeeButton").disabled = false;
+                    }
+                </script>
+                <select name="value" onChange="deleteEmployeeId()" class="selectpicker">
+                    <option value="default" selected disabled hidden>Choose Employee</option>
+
+                    <?php
+                    foreach ($employees as $row) {
+                        echo '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                    }
+                    ?>
+
+                </select>
+                <input style="display: none;" type="text" name="table", value="identities"></input>
+                <input style="display: none;" type="text" name="key", value="id"></input>
+                <button type="submit" class="btn btn-info submit" id="deleteEmployeeButton" name="delete" disabled>Delete</button><br>
+            </form>
         </div>
         <div class="col-sm-4">
             <h4>Deparments</h4>
@@ -371,6 +418,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 </select>
                 <button type="submit" class="btn btn-info submit" id="modifyDepartmentButton" disabled>Modify</button><br>
+            </form>
+            <hr>
+            <form action="admin.php" method="POST">
+                <script>
+                    function deleteDepartmentId() {
+                        document.getElementById("deleteDepartmentButton").disabled = false;
+                    }
+                </script>
+                <select name="value" onChange="deleteDepartmentId()" class="selectpicker">
+                    <option value="default" selected disabled hidden>Choose Department</option>
+
+                    <?php
+                    foreach ($departments as $row) {
+                        echo '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                    }
+                    ?>
+
+                </select>
+                <input style="display: none;" type="text" name="table", value="departments"></input>
+                <input style="display: none;" type="text" name="key", value="id"></input>
+                <button type="submit" class="btn btn-info submit" id="deleteDepartmentButton" name="delete" disabled>Delete</button><br>
             </form>
         </div>
 
@@ -392,13 +460,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     ?>
 
                 </select>
-                <button type="submit" class="btn btn-info submit" id="modifyProjectButton" disabled>Modify</button> <br>
+                <button type="submit" class="btn btn-info submit" id="modifyProjectButton" disabled>Modify</button><br>
+            </form>
+            <hr>
+            <form action="admin.php" method="POST">
+                <script>
+                    function deleteProjectId() {
+                        document.getElementById("deleteProjectButton").disabled = false;
+                    }
+                </script>
+                <select name="value" onChange="deleteProjectId()" class="selectpicker">
+                    <option value="default" selected disabled hidden>Choose Project</option>
+
+                    <?php
+                    foreach ($projects as $row) {
+                        echo '<option value="'.$row["id"].'">'.$row["name"].'</option>';
+                    }
+                    ?>
+
+                </select>
+                <input style="display: none;" type="text" name="table", value="projects"></input>
+                <input style="display: none;" type="text" name="key", value="id"></input>
+                <button type="submit" class="btn btn-info submit" id="deleteProjectButton" name="delete" disabled>Delete</button><br>
             </form>
         </div>
     </div>
 
 
-    <br><br><br><br>
+    <br><br><br>
 
 
     <div class="row">
@@ -463,7 +552,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     ?>
 
                 </select>
-                <button type="submit" class="btn btn-info submit" id="modifyLocationButton" disabled>Modify</button> <br>
+                <button type="submit" class="btn btn-info submit" id="modifyLocationButton" disabled>Modify</button><br>
+            </form>
+            <hr>
+            <form action="admin.php" method="POST">
+                <script>
+                    function deleteLocationId() {
+                        document.getElementById("deleteLocationButton").disabled = false;
+                    }
+                </script>
+                <select name="value" onChange="deleteLocationId()" class="selectpicker">
+                    <option value="default" selected disabled hidden>Choose Location</option>
+
+                    <?php
+                    foreach ($locations as $row) {
+                        echo '<option value="'.$row["id"].'">'.$row["location"].'</option>';
+                    }
+                    ?>
+
+                </select>
+                <input style="display: none;" type="text" name="table", value="locations"></input>
+                <input style="display: none;" type="text" name="key", value="id"></input>
+                <button type="submit" class="btn btn-info submit" id="deleteLocationButton" name="delete" disabled>Delete</button><br>
             </form>
         </div>
 
@@ -512,6 +622,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     </div>
+
+    <?php
+    if ($delete_item_error) {
+        echo '<div class="alert lg alert-danger">';
+            echo '<b>An error has occured</b> '.$delete_item_error;
+        echo '</div>';
+    } else if ($delete_item_error === '') {
+        echo '<div class="alert lg alert-success">';
+            echo 'Record successfuly deleted!';
+        echo '</div>';
+    }
+    ?>
+
 </div>
 
 <script>
