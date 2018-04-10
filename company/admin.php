@@ -19,6 +19,39 @@
         margin-left: auto;
         width: 60%;
     }
+
+    select,
+    .btn.btn-info {
+        height: 34px;
+    }
+
+    select {
+        width: calc(35% - 7px);
+        margin-left: 0.5px;
+    }
+
+    @-moz-document url-prefix() {
+        select {
+            margin-left: 20px;
+        }
+    }
+
+    .btn.btn-info {
+        background-color: #3c4f79;
+        width: calc(25% - 7px);
+        border-radius: 2px;
+        margin: -4px 0 1px;
+        padding: 3px 10px;
+        border: none;
+    }
+
+    hr {
+        border-bottom: 1px solid rgba(0,0,0,.1);
+        border-top: 1px solid rgba(0,0,0,.1);
+        margin-top: 8px;
+        height: 2px;
+        width: 60%;
+    }
 </style>
 
 <?php
@@ -27,7 +60,6 @@ $employeeModifSuccessMsg = "";
 $departmentModifSuccessMsg = "";
 $projectModifSuccessMsg = "";
 
-$log_time_success = false;
 $log_time_error = false;
 $promote_employee_error = false;
 
@@ -246,6 +278,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
+<!-- update simple queries again -->
+<?php include('./fancy/simpleQuery.php'); ?>
+
 <div class="container-fluid text-center">
     <h2>Admin Page</h2>
     <h4>Add or modify records</h4>
@@ -268,6 +303,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </select>
                 <button type="submit" class="btn btn-info submit" id="modifyEmployeeButton" disabled>Modify</button><br>
             </form>
+            <hr>
             <a type="button" href='employeeAddPage.php'class="btn btn-primary">Add</a>
         </div>
         <div class="col-sm-4">
@@ -287,7 +323,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </select>
                 <button type="submit" class="btn btn-info submit" id="modifyDepartmentButton" disabled>Modify</button><br>
             </form>
-            <a type="button" href='departmentAddPage.php'class="btn btn-primary">Add</a><br>
+            <hr>
+            <a type="button" href='departmentAddPage.php' class="btn btn-primary">Add</a><br>
         </div>
 
 
@@ -308,6 +345,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </select>
                 <button type="submit" class="btn btn-info submit" id="modifyProjectButton" disabled>Modify</button> <br>
             </form>
+            <hr>
             <a type="button" href='projectAddPage.php' class="btn btn-primary">Add</a>
         </div>
     </div>
@@ -319,19 +357,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="row">
         <div class="col-sm-4">
             <h4>Assignments</h4>
-
-            <?php
-            if ($log_time_success) {
-                echo '<strong class="alert-success">';
-                    echo 'Time successfully logged!';
-                echo '</strong>';
-            }
-            ?>
-
             <p>Log employee hours</p>
             <form class="assignments" action="admin.php" method="POST">
                 <select name="employee-id" class="selectpicker">
-                    <option value="default" selected disabled hidden>Choose Employee&nbsp;&nbsp;</option>
+                    <option value="default" selected disabled hidden>Choose Employee</option>
 
                     <?php
                     foreach ($employees as $row) {
@@ -342,7 +371,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </select>
                 <br>
                 <select name="project-id" class="selectpicker">
-                    <option value="default" selected disabled hidden>Choose Project&nbsp;&nbsp;</option>
+                    <option value="default" selected disabled hidden>Choose Project</option>
 
                     <?php
                     foreach ($projects as $row) {
@@ -385,7 +414,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p>Promote employees</p>
             <form class="managers" action="admin.php" method="POST">
                 <select name="employee-id" class="selectpicker">
-                    <option value="default" selected disabled hidden>Choose Employee&nbsp;&nbsp;</option>
+                    <option value="default" selected disabled hidden>Choose Employee</option>
 
                     <?php
                     foreach ($employees as $row) {
@@ -396,7 +425,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </select>
                 <br>
                 <select name="department-id" class="selectpicker">
-                    <option value="default" selected disabled hidden>Choose Department&nbsp;&nbsp;</option>
+                    <option value="default" selected disabled hidden>Choose Department</option>
 
                     <?php
                     foreach ($departments as $row) {
