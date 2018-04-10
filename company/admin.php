@@ -16,6 +16,8 @@
 
 $employeeModifSuccessMsg = "";
 $departmentModifSuccessMsg = "";
+$projectModifSuccessMsg = "";
+
 $log_time_success = false;
 
 //Submit Changes
@@ -138,6 +140,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $con->close();
     }
 
+    //Modifications for the project
+    if (isset($_POST['modifyProjectSubmit'])) {
+        $id = $name = $supervisor = $stage = "";
+
+        $id = $_POST["idInput"];
+        $name = $_POST["nameInput"];
+        $lead = $_POST["supervisorInput"];
+        $stage = $_POST["stageInput"];
+        $did = $_POST["departmentInput"];
+
+        $con = include('./fancy/connection.php');
+
+        $sql = "UPDATE projects
+                    SET did = '$did',
+                    name = '$name',
+                    lead = '$lead',
+                    stage = '$stage'
+                    WHERE id = '$id'";
+
+        $con->query($sql);
+
+        $projectModifSuccessMsg = "Succesfull";
+
+        $con->close();
+    }
+
+    //log time
     if (isset($_POST['log-time'])) {
         $eid = $_POST['employee-id'];
         $pid = $_POST['project-id'];
@@ -172,11 +201,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <option value="default" selected disabled hidden>Choose Employee</option>
 
                     <?php
-
                     foreach ($employees as $row) {
                         echo '<option value="'.$row["iid"].'">' . $row["name"] . '</option>';
                     }
-
                     ?>
 
                 </select>
@@ -191,41 +218,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <form action="departmentModifyPage.php" id="modifyDepartmentForm" method="POST">
                 <select id="modifyDepartmentSelect" name="modifyDepartmentSelect" onChange="modifyDepartmentId()" class="selectpicker">
                     <option value="default" selected disabled hidden>Choose deparment</option>
-
                     <?php
-
                     while ($row = $departments->fetch_assoc()) {
                         echo '<option value="'.$row["id"].'">' . $row["name"] . '</option>';
-
                     }
-
                     ?>
-
                 </select>
                 <button type="submit" class="btn btn-info submit" id="modifyDepartmentButton" disabled>Modify</button> <br>
             </form>
-            <a type="button" href='departmentAddPage.php'class="btn btn-primary">Add</a>
+            <a type="button" href='departmentAddPage.php' class="btn btn-primary">Add</a>
         </div>
         <div class="col-sm-4">
             <h4>Projects</h4>
+            <strong class="alert-success"><?php echo $projectModifSuccessMsg?></strong>
             <p>Modify or Add Projects record</p>
-            <!-- TODO DONT THINK THIS WORKS -->
-            <form>
-                <select id="modifyProjectSelect" onChange="modifyProjectId()" class="selectpicker">
+            <form action="projectModifyPage.php" id="modifyProjectForm" method="POST">
+                <select id="modifyProjectSelect" name="modifyProjectSelect" onChange="modifyProjectId()" class="selectpicker">
                     <option value="default" selected disabled hidden>Choose Project</option>
-
                     <?php
-
                     foreach ($projects as $row) {
                         echo '<option value="'.$row["id"].'">' . $row["name"] . '</option>';
                     }
-
-                    ?>
-
+                    ?>                  
                 </select>
-                <button type="button" class="btn btn-info" id="modifyProjectButton" disabled>Modify</button>
-                <button type="button" class="btn btn-primary">Add</button>
+                <button type="submit" class="btn btn-info submit" id="modifyProjectButton" disabled>Modify</button> <br>
             </form>
+            <a type="button" href='projectAddPage.php' class="btn btn-primary">Add</a>
         </div>
     </div>
     <br><br>
@@ -234,14 +252,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <h4>Assignments</h4>
 
             <?php
-
             if ($log_time_success) {
                 echo '<strong class="alert-success">';
                     echo 'Time successfully logged!';
                 echo '</strong>';
-
             }
-
             ?>
 
             <p>Log employee hours</p>
@@ -250,11 +265,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <option value="default" selected disabled hidden>Choose Employee&nbsp;&nbsp;</option>
 
                     <?php
-
                     foreach ($employees as $row) {
                         echo '<option value="'.$row["iid"].'">' . $row["name"] . '</option>';
                     }
-
                     ?>
 
                 </select>
@@ -263,11 +276,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <option value="default" selected disabled hidden>Choose Project&nbsp;&nbsp;</option>
 
                     <?php
-
                     foreach ($projects as $row) {
                         echo '<option value="'.$row["id"].'">' . $row["name"] . '</option>';
                     }
-
                     ?>
 
                 </select><br>
