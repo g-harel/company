@@ -15,8 +15,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $sql = "SELECT * FROM projects
               WHERE id = '$id'";
 
-    echo "<script>alert($sql)</script>";
-
     $result = $con->query($sql);
     if($result->num_rows > 0) {
         $row = $result->fetch_assoc();

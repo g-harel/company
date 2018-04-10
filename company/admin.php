@@ -177,6 +177,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $con->close();
     }
 
+    //Add for the project
+    if (isset($_POST['addProjectSubmit'])) {
+        $id = $name = $supervisor = $stage = "";
+
+        $id = "project00000". mt_rand(00000, 99999);
+        $did = $_POST["departmentInput"];
+        $name = $_POST["nameInput"];
+        $lead = $_POST["supervisorInput"];
+        $stage = $_POST["stageInput"];
+
+        $con = include('./fancy/connection.php');
+
+        $sql = "INSERT INTO projects (id, did, lid, name, lead, stage)
+                VALUES ('$id', '$did', (SELECT id FROM locations WHERE did = '$did'), '$name', '$lead', '$stage')";
+
+        $con->query($sql);
+
+        $projectModifSuccessMsg = "Succesfull";
+
+        $con->close();
+    }
+
     //log time
     if (isset($_POST['log-time'])) {
         $eid = $_POST['employee-id'];
