@@ -3,7 +3,7 @@ INSERT INTO identities (`id`, `sin`, `name`, `birthday`, `gender`) VALUES
     ('identity00000001', 'sin000001', 'Sara Barnes',     DATE '1992-12-02', 'F'),
     ('identity00000002', 'sin000002', 'Steve Rodriguez', DATE '1980-11-29', 'M'),
     ('identity00000003', 'sin000003', 'Deborah Richard', DATE '1991-04-25', 'F'),
-    ('identity00000004', 'sin000004', 'Barbara Foster',  DATE '1990-04-31', 'F'),
+    ('identity00000004', 'sin000004', 'Barbara Foster',  DATE '1990-04-28', 'F'),
     ('identity00000005', 'sin000005', 'Randy Taylor',    DATE '1987-05-14', 'M'),
     ('identity00000006', 'sin000006', 'Judy Sanders',    DATE '1990-11-07', 'F'),
     ('identity00000007', 'sin000007', 'Brandon Clark',   DATE '1993-01-28', 'M'),
