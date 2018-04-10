@@ -41,11 +41,13 @@ if($result->num_rows > 0) {
 }
 
 //get locations
+$locations = array();
 $sql = "SELECT * FROM locations";
-$locations;
 $result = $con->query($sql);
 if($result->num_rows > 0) {
-    $locations = $result;
+    while ($row = $result->fetch_assoc()) {
+        array_push($locations, $row);
+    }
 }
 
 $con->close();

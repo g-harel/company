@@ -11,12 +11,12 @@ include('./fancy/simpleQuery.php');
       <br>
       <h3>Add Department</h3>
     </div>
-    
+
     <div class="form-group">
         <label>Name:</label> <input name="nameInput" class="form-control" type="text">
     </div>
 
-    <button type="submit" name="addDepartmentSubmit" class="btn btn-success submit">Submit</button> 
+    <button type="submit" name="addDepartmentSubmit" class="btn btn-success submit">Submit</button>
     <a type="button" class="btn btn-danger" href="admin.php">Cancel</a>
 
   </form>

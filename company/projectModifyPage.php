@@ -44,12 +44,12 @@ else{
       <h3><?php echo $name?></h3>
       <input type="text" class="form-control" name="idInput" value="<?php echo $id?>" readonly></input>
     </div>
-    
+
     <div class="form-group">
-        <label>Name:</label> <input name="nameInput" class="form-control" type="text" value="<?php echo $name?>"> <br>  
+        <label>Name:</label> <input name="nameInput" class="form-control" type="text" value="<?php echo $name?>"> <br>
         <label>Department:</label>
         <select class="form-control" name="departmentInput">
-          <?php 
+          <?php
           foreach ($departments as $row) {
             if($row["id"] == $did){
               echo '<option selected value="'.$row["id"].'">' . $row["name"] . '</option>';
@@ -59,11 +59,11 @@ else{
             }
           }
           ?>
-        </select>   
+        </select>
         <br>
         <label>Supervisor:</label>
         <select class="form-control" name="supervisorInput">
-          <?php 
+          <?php
           while($row = $managersEmployees->fetch_assoc()){
             if($row["eid"] == $lead){
               echo '<option selected value="'.$row["id"].'">' . $row["name"] . '</option>';
@@ -78,7 +78,7 @@ else{
         <label>Stage:</label>
         <select class="form-control" name="stageInput">
           <?php
-          $newStage = 0; 
+          $newStage = 0;
           while($newStage <= 3){
               if($newStage == $stage){
                 echo '<option selected value="'.$newStage.'">' . $newStage. '</option>';
@@ -92,8 +92,10 @@ else{
         </select>
     </div>
 
-    <button type="submit" name="modifyProjectSubmit" class="btn btn-success submit">Submit</button> 
+    <button type="submit" name="modifyProjectSubmit" class="btn btn-success submit">Submit</button>
     <a type="button" class="btn btn-danger" href="admin.php">Cancel</a>
 
   </form>
 </div>
+
+<?php include('./views/footer.php'); ?>

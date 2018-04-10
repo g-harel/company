@@ -48,7 +48,7 @@
     hr {
         border-bottom: 1px solid rgba(0,0,0,.1);
         border-top: 1px solid rgba(0,0,0,.1);
-        margin-top: 8px;
+        margin-bottom: 8px;
         height: 2px;
         width: 60%;
     }
@@ -59,6 +59,7 @@
 $employeeModifSuccessMsg = "";
 $departmentModifSuccessMsg = "";
 $projectModifSuccessMsg = "";
+$locationModifSuccessMsg = "";
 
 $log_time_error = false;
 $promote_employee_error = false;
@@ -97,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $con->query($sql);
 
-        $employeeModifSuccessMsg = "Successfull";
+        $employeeModifSuccessMsg = "Successful";
 
         $con->close();
     }
@@ -132,7 +133,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $con->query($sql);
 
-        $employeeModifSuccessMsg = "Successfull";
+        $employeeModifSuccessMsg = "Successful";
 
         $con->close();
     }
@@ -159,7 +160,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $con->query($sql);
 
-        $departmentModifSuccessMsg = "Succesfull";
+        $departmentModifSuccessMsg = "Successful";
 
         $con->close();
     }
@@ -179,7 +180,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $con->query($sql);
 
-        $departmentModifSuccessMsg = "Succesfull";
+        $departmentModifSuccessMsg = "Successful";
 
         $con->close();
     }
@@ -205,7 +206,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $con->query($sql);
 
-        $projectModifSuccessMsg = "Succesfull";
+        $projectModifSuccessMsg = "Successful";
 
         $con->close();
     }
@@ -227,7 +228,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $con->query($sql);
 
-        $projectModifSuccessMsg = "Succesfull";
+        $projectModifSuccessMsg = "Successful";
 
         $con->close();
     }
@@ -253,6 +254,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $con->query($sql);
         $log_time_error = $con->error;
+        $con->close();
+    }
+
+    // add a location
+    if (
+        isset($_POST['add-location']) &&
+        isset($_POST['department-id']) &&
+        isset($_POST['location'])
+    ) {
+        $id = "location0000". mt_rand(00000, 99999);
+        $did = $_POST['department-id'];
+        $location = $_POST['location'];
+
+        $con = include('./fancy/connection.php');
+
+        $sql = "INSERT INTO
+                    locations (`id`, `did`, `location`)
+                VALUES ('$id', '$did', '$location');";
+
+        $con->query($sql);
+        $locationModifSuccessMsg = "Successful";
+        $con->close();
+    }
+
+    // modify a location
+    if (
+        isset($_POST['modify-location']) &&
+        isset($_POST['id']) &&
+        isset($_POST['department-id']) &&
+        isset($_POST['location'])
+    ) {
+        $id = $_POST['id'];
+        $did = $_POST['department-id'];
+        $location = $_POST['location'];
+
+        $con = include('./fancy/connection.php');
+
+        $sql = "UPDATE locations
+                SET
+                    `id` = '$id',
+                    `did` = '$did',
+                    `location` = '$location'
+                WHERE locations.id = '$id';";
+
+        $con->query($sql);
+        $locationModifSuccessMsg = "Successful";
         $con->close();
     }
 
@@ -289,7 +336,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="col-sm-4">
             <h4>Employees</h4>
             <strong class="alert-success"><?php echo $employeeModifSuccessMsg?></strong>
-            <p>Modify or Add Employees record</p>
+            <p>Add or Modify Employees Record</p>
+            <a type="button" href='employeeAddPage.php'class="btn btn-primary">Add New</a>
+            <hr>
             <form action="employeeModifyPage.php" id="modifyEmployeeForm" method="POST">
                 <select id="modifyEmployeeSelect" name="modifyEmployeeSelect" onChange="modifyEmployeeId()" class="selectpicker">
                     <option value="default" selected disabled hidden>Choose Employee</option>
@@ -303,13 +352,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </select>
                 <button type="submit" class="btn btn-info submit" id="modifyEmployeeButton" disabled>Modify</button><br>
             </form>
-            <hr>
-            <a type="button" href='employeeAddPage.php'class="btn btn-primary">Add</a>
         </div>
         <div class="col-sm-4">
             <h4>Deparments</h4>
             <strong class="alert-success"><?php echo $departmentModifSuccessMsg?></strong>
-            <p>Modify or Add Departments record</p>
+            <p>Add or Modify Departments Record</p>
+            <a type="button" href='departmentAddPage.php' class="btn btn-primary">Add New</a><br>
+            <hr>
             <form action="departmentModifyPage.php" id="modifyDepartmentForm" method="POST">
                 <select id="modifyDepartmentSelect" name="modifyDepartmentSelect" onChange="modifyDepartmentId()" class="selectpicker">
                     <option value="default" selected disabled hidden>Choose deparment</option>
@@ -323,15 +372,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </select>
                 <button type="submit" class="btn btn-info submit" id="modifyDepartmentButton" disabled>Modify</button><br>
             </form>
-            <hr>
-            <a type="button" href='departmentAddPage.php' class="btn btn-primary">Add</a><br>
         </div>
 
 
         <div class="col-sm-4">
             <h4>Projects</h4>
             <strong class="alert-success"><?php echo $projectModifSuccessMsg?></strong>
-            <p>Modify or Add Projects record</p>
+            <p>Add or Modify Projects Record</p>
+            <a type="button" href='projectAddPage.php' class="btn btn-primary">Add New</a>
+            <hr>
             <form action="projectModifyPage.php" id="modifyProjectForm" method="POST">
                 <select id="modifyProjectSelect" name="modifyProjectSelect" onChange="modifyProjectId()" class="selectpicker">
                     <option value="default" selected disabled hidden>Choose Project</option>
@@ -345,8 +394,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </select>
                 <button type="submit" class="btn btn-info submit" id="modifyProjectButton" disabled>Modify</button> <br>
             </form>
-            <hr>
-            <a type="button" href='projectAddPage.php' class="btn btn-primary">Add</a>
         </div>
     </div>
 
@@ -391,7 +438,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo '</div>';
             } else if ($log_time_error === '') {
                 echo '<div class="alert alert-success">';
-                    echo 'Time successfully logged!';
+                    echo 'Time successfuly logged!';
                 echo '</div>';
             }
             ?>
@@ -401,10 +448,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         <div class="col-sm-4">
             <h4>Locations</h4>
-            <p>Modify or Add Locations record</p>
-            <form>
-                <button type="button" class="btn btn-info">Modify</button><br>
-                <button type="button" class="btn btn-primary">Add</button><br>
+            <strong class="alert-success"><?php echo $locationModifSuccessMsg?></strong>
+            <p>Add or Modify Location Record</p>
+            <a type="button" href='locationAddPage.php' class="btn btn-primary">Add New</a>
+            <hr>
+            <form action="locationModifyPage.php" id="modifyLocationForm" method="POST">
+                <select name="location" onChange="modifyLocationId()" class="selectpicker">
+                    <option value="default" selected disabled hidden>Choose Location</option>
+
+                    <?php
+                    foreach ($locations as $row) {
+                        echo '<option value="'.$row["id"].'">' . $row["location"] . '</option>';
+                    }
+                    ?>
+
+                </select>
+                <button type="submit" class="btn btn-info submit" id="modifyLocationButton" disabled>Modify</button> <br>
             </form>
         </div>
 
@@ -444,7 +503,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 echo '</div>';
             } else if ($promote_employee_error === '') {
                 echo '<div class="alert alert-success">';
-                    echo 'Employee successfully promoted!';
+                    echo 'Employee successfuly promoted!';
                 echo '</div>';
             }
             ?>
@@ -466,6 +525,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     function modifyProjectId() {
         document.getElementById("modifyProjectButton").disabled = false;
+    }
+
+    function modifyLocationId() {
+        document.getElementById("modifyLocationButton").disabled = false;
     }
 </script>
 
