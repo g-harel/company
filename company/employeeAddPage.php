@@ -22,7 +22,7 @@ include('./fancy/simpleQuery.php');
         <label>Department:</label>
         <select class="form-control" name="departmentInput">
           <?php 
-          while($row = $departments->fetch_assoc()){
+          foreach ($departments as $row) {
               echo '<option value="'.$row["id"].'">' . $row["name"] . '</option>';
           }
           ?>

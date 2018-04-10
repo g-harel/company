@@ -50,7 +50,7 @@ else{
         <label>Department:</label>
         <select class="form-control" name="departmentInput">
           <?php 
-          while($row = $departments->fetch_assoc()){
+          foreach ($departments as $row) {
             if($row["id"] == $did){
               echo '<option selected value="'.$row["id"].'">' . $row["name"] . '</option>';
             }
