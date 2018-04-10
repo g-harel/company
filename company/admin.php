@@ -7,7 +7,15 @@
         margin: 10px;
     }
 
-    form.assignments > * {
+    .alert {
+        margin: 10px;
+    }
+
+    form.assignments > *,
+    form.managers > *,
+    .alert {
+        margin-right: auto;
+        margin-left: auto;
         width: 60%;
     }
 </style>
@@ -16,7 +24,8 @@
 
 $employeeModifSuccessMsg = "";
 $departmentModifSuccessMsg = "";
-$log_time_success = false;
+$log_time_error = false;
+$promote_employee_error = false;
 
 //Submit Changes
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -51,7 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $con->query($sql);
 
-        $employeeModifSuccessMsg = "Succesfull";
+        $employeeModifSuccessMsg = "Successfull";
 
         $con->close();
     }
@@ -86,7 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $con->query($sql);
 
-        $employeeModifSuccessMsg = "Succesfull";
+        $employeeModifSuccessMsg = "Successfull";
 
         $con->close();
     }
@@ -151,9 +160,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 ON DUPLICATE KEY
                     UPDATE hours = hours + $hours;";
 
-        $con->query($sql) or die($con->error);
+        $con->query($sql);
+        $log_time_error = $con->error;
         $con->close();
-        $log_time_success = true;
+    }
+
+    if (isset($_POST['promote-employee'])) {
+        $eid = $_POST['employee-id'];
+        $did = $_POST['department-id'];
+
+        $con = include('./fancy/connection.php');
+
+        $sql = "INSERT INTO
+                    managers (`eid`, `did`, `start`)
+                VALUES ('$eid', '$did', NOW())";
+
+        $con->query($sql);
+        $promote_employee_error = $con->error;
+        $con->close();
     }
 }
 ?>
@@ -194,9 +218,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <?php
 
-                    while ($row = $departments->fetch_assoc()) {
+                    foreach ($departments as $row) {
                         echo '<option value="'.$row["id"].'">' . $row["name"] . '</option>';
-
                     }
 
                     ?>
@@ -232,18 +255,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="row">
         <div class="col-sm-4">
             <h4>Assignments</h4>
-
-            <?php
-
-            if ($log_time_success) {
-                echo '<strong class="alert-success">';
-                    echo 'Time successfully logged!';
-                echo '</strong>';
-
-            }
-
-            ?>
-
             <p>Log employee hours</p>
             <form class="assignments" action="admin.php" method="POST">
                 <select name="employee-id" class="selectpicker">
@@ -274,6 +285,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <input type="number" name="hours" placeholder="Number of hours" min="0" step=".01"/><br>
                 <button type="submit" class="btn btn-primary" name="log-time">Log Time</button><br>
             </form>
+
+            <?php
+
+            if ($log_time_error) {
+                echo '<div class="alert alert-danger">';
+                    echo '<b>An error has occured</b> '.$log_time_error;
+                echo '</div>';
+            } else if ($log_time_error === '') {
+                echo '<div class="alert alert-success">';
+                    echo 'Time successfully logged!';
+                echo '</div>';
+            }
+
+            ?>
         </div>
         <div class="col-sm-4">
             <h4>Locations</h4>
@@ -282,8 +307,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <div class="col-sm-4">
             <h4>Managers</h4>
-            <p>Modify or Add Managers record</p>
-            <button type="button" class="btn btn-info">Modify</button> <button type="button" class="btn btn-primary">Add</button>
+            <p>Promote employees</p>
+            <form class="managers" action="admin.php" method="POST">
+                <select name="employee-id" class="selectpicker">
+                    <option value="default" selected disabled hidden>Choose Employee&nbsp;&nbsp;</option>
+
+                    <?php
+
+                    foreach ($employees as $row) {
+                        echo '<option value="'.$row["iid"].'">' . $row["name"] . '</option>';
+                    }
+
+                    ?>
+
+                </select>
+                <br>
+                <select name="department-id" class="selectpicker">
+                    <option value="default" selected disabled hidden>Choose Department&nbsp;&nbsp;</option>
+
+                    <?php
+
+                    foreach ($departments as $row) {
+                        echo '<option value="'.$row["id"].'">' . $row["name"] . '</option>';
+                    }
+
+                    ?>
+
+                </select><br>
+                <button type="submit" class="btn btn-primary" name="promote-employee">Promote</button><br>
+            </form>
+
+            <?php
+
+            if ($promote_employee_error) {
+                echo '<div class="alert alert-danger">';
+                    echo '<b>An error has occured</b> '.$promote_employee_error;
+                echo '</div>';
+            } else if ($promote_employee_error === '') {
+                echo '<div class="alert alert-success">';
+                    echo 'Employee successfully promoted!';
+                echo '</div>';
+            }
+
+            ?>
         </div>
     </div>
 </div>

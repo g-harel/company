@@ -13,11 +13,13 @@ if($result->num_rows > 0) {
 }
 
 // get Departments values;
+$departments = array();
 $sql = "SELECT * FROM departments";
-$departments;
 $result = $con->query($sql);
 if($result->num_rows > 0) {
-    $departments = $result;
+    while ($row = $result->fetch_assoc()) {
+        array_push($departments, $row);
+    }
 }
 
 // get Project values;
