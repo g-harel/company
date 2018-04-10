@@ -23,3 +23,12 @@ body {
 h2 {
     padding-top: 20px;
 }
+
+.btn.btn-primary {
+    background-color: #212529;
+    border-color: #3c4f79;
+}
+
+.btn.btn-primary:hover {
+    background-color: #3c4f79;
+}

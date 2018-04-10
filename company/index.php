@@ -31,14 +31,8 @@
     }
 
     .self-service button {
-        background-color: #212529;
-        padding: 16px 32px;
+        padding: 15px 31px;
         margin-top: 10px;
-        border: 0;
-    }
-
-    .self-service button:hover {
-        background-color: #3c4f79;
     }
 </style>
 
@@ -123,7 +117,10 @@
     if (isset($_POST['query'])) {
         $sql = $_POST['query'];
     } else {
-        $sql = "SELECT * FROM projects;";
+        $sql = "SELECT * FROM projects;
+-- TABLES: assignments, projects, locations,
+--         managers, dependents, employees,
+--         departments, identities";
     }
 
     ?>
