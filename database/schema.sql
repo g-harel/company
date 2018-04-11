@@ -18,14 +18,15 @@ CREATE TABLE departments (
 );
 
 CREATE TABLE employees (
-    `iid`        CHAR(16)    NOT NULL,
-    `did`        CHAR(16)    NOT NULL,
+    `iid`        CHAR(16)      NOT NULL,
+    `did`        CHAR(16)      NOT NULL,
     `supervisor` CHAR(16),
-    `address`    VARCHAR(64) NOT NULL,
-    `phone`      VARCHAR(32) NOT NULL,
+    `address`    VARCHAR(64)   NOT NULL,
+    `phone`      VARCHAR(32)   NOT NULL,
+    `hourly`     DECIMAL(16,2) NOT NULL,
     --
     PRIMARY KEY (`iid`),
-    FOREIGN KEY (`iid`)        REFERENCES identities (`id`),
+    FOREIGN KEY (`iid`)        REFERENCES identities (`id`) ON DELETE CASCADE,
     FOREIGN KEY (`did`)        REFERENCES departments (`id`),
     FOREIGN KEY (`supervisor`) REFERENCES employees (`iid`)
 );
@@ -35,8 +36,8 @@ CREATE TABLE dependents (
     `eid` CHAR(16) NOT NULL,
     --
     PRIMARY KEY (`iid`),
-    FOREIGN KEY (`iid`) REFERENCES identities (`id`),
-    FOREIGN KEY (`eid`) REFERENCES employees (`iid`)
+    FOREIGN KEY (`iid`) REFERENCES identities (`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`eid`) REFERENCES employees (`iid`) ON DELETE CASCADE
 );
 
 CREATE TABLE managers (
@@ -60,21 +61,26 @@ CREATE TABLE locations (
 );
 
 CREATE TABLE projects (
-    `id`   CHAR(16)    NOT NULL,
-    `lid`  CHAR(16)    NOT NULL,
-    `name` VARCHAR(32) NOT NULL,
+    `id`    CHAR(16)    NOT NULL,
+    `did`   CHAR(16)    NOT NULL,
+    `lid`   CHAR(16)    NOT NULL,
+    `name`  VARCHAR(32) NOT NULL,
+    `lead`  CHAR(16)    NOT NULL,
+    `stage` TINYINT     NOT NULL,
     --
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`lid`) REFERENCES locations (`id`),
+    FOREIGN KEY (`did`)  REFERENCES departments (`id`),
+    FOREIGN KEY (`lid`)  REFERENCES locations (`id`),
+    FOREIGN KEY (`lead`) REFERENCES employees (`iid`),
     CONSTRAINT uq_name UNIQUE (`name`)
 );
 
 CREATE TABLE assignments (
-    `eid`        CHAR(16)      NOT NULL,
-    `pid`        CHAR(16)      NOT NULL,
-    `hours`      DECIMAL(8, 2) NOT NULL DEFAULT 0.00,
+    `eid`        CHAR(16)       NOT NULL,
+    `pid`        CHAR(16)       NOT NULL,
+    `hours`      DECIMAL(16, 2) NOT NULL,
     --
     PRIMARY KEY (`eid`, `pid`),
-    FOREIGN KEY (`eid`) REFERENCES employees (`iid`),
-    FOREIGN KEY (`pid`) REFERENCES projects (`id`)
+    FOREIGN KEY (`eid`) REFERENCES employees (`iid`) ON DELETE CASCADE,
+    FOREIGN KEY (`pid`) REFERENCES projects (`id`) ON DELETE CASCADE
 );
