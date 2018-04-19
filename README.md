@@ -18,7 +18,7 @@ $ ./script/generate.sh
 
 3. Navigate to phpmyadmin (http://localhost:41062/phpmyadmin/) and create a new database.
 
-4. Navigate to new database and run generated sql.
+4. Run generated sql in the new database's SQL tab in phpmyadmin.
 
 5. Rename `./company/config.php.example` to `./company/config.php` and edit configuration as required.
 
